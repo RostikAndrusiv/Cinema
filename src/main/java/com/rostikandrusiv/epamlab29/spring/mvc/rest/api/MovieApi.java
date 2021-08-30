@@ -50,6 +50,6 @@ public interface MovieApi {
     })
     @ApiOperation("Delete movie")
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteMovie(@PathVariable long id);
+    ResponseEntity<Void> deleteMovie(@PathVariable long id);
 }
 

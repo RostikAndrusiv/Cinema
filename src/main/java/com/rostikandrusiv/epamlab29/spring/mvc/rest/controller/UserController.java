@@ -19,8 +19,8 @@ public class UserController implements UserApi {
     private final UserService userService;
     private final UserAssembler userAssembler;
 
-    public UserModel getUser(String login) {
-        UserDto outUserDto = userService.getUser(login);
+    public UserModel getUser(long id) {
+        UserDto outUserDto = userService.getUser(id);
         return userAssembler.toModel(outUserDto);
     }
 
@@ -36,14 +36,14 @@ public class UserController implements UserApi {
         return userAssembler.toModel(outUserDto);
     }
 
-    public UserModel updateUser(String login, UserDto userDto) {
-        UserDto outUserDto = userService.updateUser(login, userDto);
+    public UserModel updateUser(long id, UserDto userDto) {
+        UserDto outUserDto = userService.updateUser(id, userDto);
         return userAssembler.toModel(outUserDto);
     }
 
 
-    public ResponseEntity<Void> deleteUser(String login) {
-        userService.deleteUser(login);
+    public ResponseEntity<Void> deleteUser(long id) {
+        userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -1,6 +1,7 @@
 package com.rostikandrusiv.epamlab29.spring.mvc.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.dto.group.OnCreate;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.dto.group.OnUpdate;
 import lombok.Builder;
@@ -11,6 +12,9 @@ import javax.validation.constraints.*;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto {
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private long id;
 
     @NotBlank(message = "login should not be empty", groups = OnCreate.class)
     private String login;

@@ -2,9 +2,13 @@ package com.rostikandrusiv.epamlab29.spring.mvc.rest.model;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.Collection;
-@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
+import java.util.List;
+
 @Entity
 @Data
 @Builder
@@ -14,13 +18,16 @@ public class Seat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
+    private int id;
 
-    int number;
+    private int number;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "seat")
+    @JsonIgnore
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<Ticket> tickets;
 
+//    @ManyToOne
+//    private Room room;
 
 }

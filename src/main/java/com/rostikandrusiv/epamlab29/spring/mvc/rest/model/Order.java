@@ -1,12 +1,12 @@
 package com.rostikandrusiv.epamlab29.spring.mvc.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Collection;
 
-@Entity
-@Table(name = "orders")
+@Entity(name = "orders")
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,13 +18,11 @@ public class Order {
     private int id;
 
     @ManyToOne
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;
 
     @OneToMany(mappedBy = "orders")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonIgnore
     private Collection<Ticket> tickets;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private double totalCost;
 }

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
-@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 @Entity
 @Data
 @Builder
@@ -20,7 +19,6 @@ public class Ticket {
     private int id;
 
     @ManyToOne
-    @JsonIgnore
     private Seance seance;
 
     @ManyToOne

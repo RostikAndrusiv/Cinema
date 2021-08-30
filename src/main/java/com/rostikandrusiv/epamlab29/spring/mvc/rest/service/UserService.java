@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserService {
 
-    UserDto getUser(String login);
+    UserDto getUser(long id);
 
     List<UserDto> getAllUsers();
 
@@ -14,8 +14,9 @@ public interface UserService {
 
     UserDto findByLoginAndPassword(String login, String password);
 
-    UserDto updateUser(String login, UserDto userDto);
+    UserDto updateUser(long id, UserDto userDto);
 
-    void deleteUser(String login);
+    void deleteUser(long id);
+
 
 }

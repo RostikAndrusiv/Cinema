@@ -28,9 +28,9 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDto getUser(String login) {
-        log.info("getUser by name {} ", login);
-        User user = userRepository.findByLogin(login)
+    public UserDto getUser(long id) {
+        log.info("getUser by id {} ", id);
+        User user = userRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
         return UserMapper.INSTANCE.toUserDto(user);
     }
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto findByLoginAndPassword(String login, String password) {
         log.info("findUser with name {} ", login);
-        User user = UserMapper.INSTANCE.toUser(getUser(login));
+        User user = userRepository.findByLogin(login);
         if (passwordEncoder.matches(password, user.getPassword())) {
             return UserMapper.INSTANCE.toUserDto(user);
         }
@@ -73,9 +73,9 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserDto updateUser(String login, UserDto userDto) {
-        log.info("updateUser with name {} ", login);
-        User persistedUser = userRepository.findByLogin(login)
+    public UserDto updateUser(long id, UserDto userDto) {
+        log.info("updateUser with id {} ", id);
+        User persistedUser = userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
         User storedUser = userRepository.save(persistedUser);
         log.info("User with {} name was successfully updated", storedUser.getLogin());
@@ -83,9 +83,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(String login) {
-        log.info("deleteUser with name {} ", login);
-        User user = userRepository.findByLogin(login)
+    public void deleteUser(long id) {
+        log.info("deleteUser with id {} ", id);
+        User user = userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
         userRepository.delete(user);
     }

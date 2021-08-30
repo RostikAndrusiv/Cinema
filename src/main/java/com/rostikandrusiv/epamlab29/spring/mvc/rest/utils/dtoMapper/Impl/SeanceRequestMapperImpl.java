@@ -17,13 +17,9 @@ import javax.annotation.PostConstruct;
 
 @Component
 public class SeanceRequestMapperImpl implements SeanceRequestMapper {
-
     private final ModelMapper mapper;
-
     private final SessionRepository sessionRepository;
-
     private final MovieRepository movieRepository;
-
     private final RoomRepository roomRepository;
 
     public SeanceRequestMapperImpl(ModelMapper mapper, SessionRepository sessionRepository, MovieRepository movieRepository, RoomRepository roomRepository) {

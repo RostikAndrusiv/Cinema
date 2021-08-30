@@ -1,4 +1,4 @@
-package com.rostikandrusiv.epamlab29.spring.mvc.rest.controller;
+package com.rostikandrusiv.epamlab29.spring.mvc.rest.security.auth;
 
 import lombok.Data;
 

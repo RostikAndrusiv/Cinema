@@ -28,7 +28,7 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public SessionDto createSession(SessionDto sessionDto) {
-        log.info("createSession at {} ", sessionDto.getStartTime());
+     //   log.info("createSession at {} ", sessionDto.getStartTime());
         Session session = SessionMapper.INSTANCE.toSession(sessionDto);
         session = sessionRepository.save(session);
         return SessionMapper.INSTANCE.toSessionDto(session);
@@ -36,11 +36,11 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public SessionDto updateSession(long id, SessionDto sessionDto) {
-        log.info("updateSession id= {}, startTime changed to {}", id, sessionDto.getStartTime());
+   //     log.info("updateSession id= {}, startTime changed to {}", id, sessionDto.getStartTime());
         Session persistedSession = sessionRepository.findById(id)
                 .orElseThrow(SessionNotFoundException::new);
         Session storedSession = sessionRepository.save(persistedSession);
-        log.info("Session time was successfully changed to {}", storedSession.getStartTime());
+   //     log.info("Session time was successfully changed to {}", storedSession.getStartTime());
         return SessionMapper.INSTANCE.toSessionDto(persistedSession);
     }
 

@@ -1,26 +1,28 @@
 package com.rostikandrusiv.epamlab29.spring.mvc.rest.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.model.Order;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.model.Seance;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.model.Seat;
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.List;
+
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TicketDto {
 
-
     private long id;
 
-    private Seance seance;
+    @JsonIgnore
+    private SeatDto seat;
 
-    private Seat seat;
+    @JsonIgnore
+    private OrderDto orders;
 
-    private Order orders;
-
-    private boolean isBooked = false;
-
+    private boolean isBooked;
+    @JsonIgnore
+    private SeanceDto seance;
 }

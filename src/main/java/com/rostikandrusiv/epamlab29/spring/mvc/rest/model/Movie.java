@@ -1,13 +1,12 @@
 package com.rostikandrusiv.epamlab29.spring.mvc.rest.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.Collection;
-@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 @Entity
 @Data
 @Builder
@@ -25,7 +24,8 @@ public class Movie {
 
     private String description;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "movie")
-    private Collection<Seance> seances;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "movie")
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    private Collection<Seance> seances;
 }

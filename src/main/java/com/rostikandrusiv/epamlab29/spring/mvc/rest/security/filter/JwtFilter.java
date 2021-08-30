@@ -28,30 +28,14 @@ import static org.springframework.util.StringUtils.hasText;
 
 @Component
 @Slf4j
-//public class JwtFilter extends GenericFilterBean {
 
-    public class JwtFilter extends OncePerRequestFilter {
+public class JwtFilter extends OncePerRequestFilter {
 
     public static final String AUTHORIZATION = "Authorization";
     @Autowired
     private JwtProvider jwtProvider;
     @Autowired
     private JwtUserDetailsService jwtUserDetailsService;
-
-//    @Override
-//    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-//        logger.info("do filter...");
-//        String token = getTokenFromRequest((HttpServletRequest) servletRequest);
-//        if (token != null && jwtProvider.validateToken(token)) {
-//            String userLogin = jwtProvider.getLoginFromToken(token);
-//            log.info("doFilter gotLoginFromToken...");
-//            UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(userLogin);                            //Servlet throws exception at this point :(
-//            log.info("doFilter loadUserNameFromToken...");
-//            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//            SecurityContextHolder.getContext().setAuthentication(auth);
-//        }
-//        filterChain.doFilter(servletRequest, servletResponse);
-//    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -72,8 +56,6 @@ import static org.springframework.util.StringUtils.hasText;
         }
         filterChain.doFilter(request, response);
     }
-
-
 
 
     private String getTokenFromRequest(HttpServletRequest request) {

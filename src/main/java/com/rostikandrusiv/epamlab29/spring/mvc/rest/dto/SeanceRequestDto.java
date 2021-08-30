@@ -1,6 +1,8 @@
 package com.rostikandrusiv.epamlab29.spring.mvc.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.dto.group.OnCreate;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.model.Ticket;
@@ -18,10 +20,10 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-//@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SeanceRequestDto {
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     private long id;
 
     @NotNull(message = "MovieID should not be empty", groups = OnCreate.class)

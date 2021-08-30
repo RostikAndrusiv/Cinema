@@ -13,5 +13,5 @@ public interface OrderMapper {
     Order toOrder(OrderDto orderDto);
 
     @InheritInverseConfiguration
-    OrderDto toOrderDto(Order user);
+    OrderDto toOrderDto(Order order);
 }

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalTime;
 
-@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
+
 @Entity
 @Data
 @Builder
@@ -23,8 +23,6 @@ public class Session {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
-
     private LocalTime startTime;
 }

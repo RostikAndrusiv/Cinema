@@ -27,18 +27,18 @@ public class SeanceAssembler extends RepresentationModelAssemblerSupport<SeanceD
     public SeanceModel toModel(SeanceDto entity) {
         SeanceModel seanceModel = new SeanceModel(entity);
 
-        Link get = linkTo(methodOn(SeanceController.class).getAllSeances()).withRel(GET_REL);
+        Link get = linkTo(methodOn(SeanceController.class).getSeance(entity.getId())).withRel(GET_REL);
 
         Link getAll = linkTo(methodOn(SeanceController.class).getAllSeances()).withRel(GET_ALL_REL);
 
-//        Link create = linkTo(methodOn(SeanceController.class).createSeance(entity)).withRel(CREATE_REL);
+        Link create = linkTo(methodOn(SeanceController.class).createSeance(null)).withRel(CREATE_REL);
 
         Link update = linkTo(methodOn(SeanceController.class).updateSeance(entity.getId(), entity))
                 .withRel(UPDATE_REL);
         Link delete = linkTo(methodOn(SeanceController.class).deleteSeance(entity.getId()))
                 .withRel(DELETE_REL);
 
-        seanceModel.add(get, getAll, update, delete);
+        seanceModel.add(get, create, getAll, update, delete);
 
         return seanceModel;
 

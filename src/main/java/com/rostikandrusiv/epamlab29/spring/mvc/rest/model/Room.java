@@ -5,11 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -25,11 +29,11 @@ public class Room {
 
     private int numberOfSeats;
 
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<Seat> seats;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "room")
-    private Collection<Seance> seances;
+//    @OneToMany(mappedBy = "room")
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    private Collection<Seance> seances;
 }

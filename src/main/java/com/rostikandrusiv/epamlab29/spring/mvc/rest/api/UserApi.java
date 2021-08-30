@@ -20,12 +20,12 @@ import java.util.List;
 public interface UserApi {
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "login", paramType = "path", required = true, value = "User login"),
+            @ApiImplicitParam(name = "id", paramType = "path", required = true, value = "User id"),
     })
-    @ApiOperation("Get user")
+    @ApiOperation("Get user by id")
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "{login}")
-    UserModel getUser(@PathVariable String login);
+    @GetMapping(value = "{id}")
+    UserModel getUser(@PathVariable long id);
 
     @ApiOperation("Get all users")
     @ResponseStatus(HttpStatus.OK)
@@ -38,17 +38,17 @@ public interface UserApi {
     UserModel createUser(@RequestBody @Validated(OnCreate.class) UserDto userDto);
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "login", paramType = "path", required = true, value = "User login"),
+            @ApiImplicitParam(name = "id", paramType = "path", required = true, value = "User id"),
     })
     @ApiOperation("Update user")
     @ResponseStatus(HttpStatus.OK)
-    @PatchMapping("/{login}")
-    UserModel updateUser(@PathVariable @Validated(OnUpdate.class) String login, @RequestBody UserDto userDto);
+    @PatchMapping("/{id}")
+    UserModel updateUser(@PathVariable @Validated(OnUpdate.class) long id, @RequestBody UserDto userDto);
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "login", paramType = "path", required = true, value = "User login"),
     })
     @ApiOperation("Delete user")
-    @DeleteMapping(value = "/{login}")
-    ResponseEntity<Void> deleteUser(@PathVariable String login);
+    @DeleteMapping(value = "/{id}")
+    ResponseEntity<Void> deleteUser(@PathVariable long id);
 }
