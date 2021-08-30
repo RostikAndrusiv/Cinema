@@ -23,7 +23,7 @@ public class SeatDto {
     int number;
 
     @JsonIgnore
-    private Collection<Ticket> tickets;
+    private Collection<TicketDto> tickets;
 
 
 }

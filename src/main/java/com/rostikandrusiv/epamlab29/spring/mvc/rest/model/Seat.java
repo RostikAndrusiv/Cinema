@@ -22,12 +22,7 @@ public class Seat {
 
     private int number;
 
-    @OneToMany(mappedBy = "seat")
-    @JsonIgnore
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Collection<Ticket> tickets;
-
-//    @ManyToOne
-//    private Room room;
+//    @OneToMany(mappedBy = "seat")
+//    private Collection<Ticket> tickets;
 
 }

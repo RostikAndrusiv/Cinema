@@ -6,7 +6,7 @@ import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(uses = TicketMapper.class)
 public interface SeatMapper {
     SeatMapper INSTANCE = Mappers.getMapper(SeatMapper.class);
 

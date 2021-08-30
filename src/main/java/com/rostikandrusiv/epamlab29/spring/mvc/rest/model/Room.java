@@ -30,7 +30,6 @@ public class Room {
     private int numberOfSeats;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<Seat> seats;
 
 //    @OneToMany(mappedBy = "room")

@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static jdk.nashorn.internal.objects.NativeMath.round;
+
 
 @Slf4j
 @Configuration
@@ -83,7 +85,7 @@ public class DatabaseInit {
                     Ticket ticket = Ticket.builder()
                             .seance(seance)
                             .seat(seat)
-                            .isBooked(false).build();
+                            .booked(false).build();
                     ticketRepository.save(ticket);
                 });
             });
@@ -109,7 +111,8 @@ public class DatabaseInit {
     }
 
     private double randomPrice(){
-        return ThreadLocalRandom.current().nextDouble(8.5, 15.5);
+        double random = ThreadLocalRandom.current().nextDouble(8.5, 15.5);
+        return round(random, 2);
     }
 
     private LocalDate randomDate() {

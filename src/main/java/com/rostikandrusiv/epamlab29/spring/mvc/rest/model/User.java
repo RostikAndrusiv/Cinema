@@ -21,10 +21,9 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
     private List<Order> orders;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
     }

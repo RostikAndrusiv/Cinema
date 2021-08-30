@@ -9,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @Component
-
 public class WebMvcConfig implements WebMvcConfigurer {
 
     private final LogInterceptor logInterceptor;

@@ -24,5 +24,6 @@ public class Session {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     private LocalTime startTime;
 }

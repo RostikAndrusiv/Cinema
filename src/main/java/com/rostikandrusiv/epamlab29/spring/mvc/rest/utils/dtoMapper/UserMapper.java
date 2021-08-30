@@ -7,17 +7,14 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(uses = {OrderMapper.class, RoleMapper.class})
 public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
-
 
 @Mapping(target = "repeatPassword", ignore=true)
 @Mapping(target = "password", ignore = true)
 UserDto toUserDto(User user);
 
-
     @InheritInverseConfiguration
-   // @Mapping(target = "password", ignore = true)
     User toUser(UserDto userDto);
 }

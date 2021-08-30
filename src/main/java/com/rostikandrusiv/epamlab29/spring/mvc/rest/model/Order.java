@@ -1,7 +1,6 @@
 package com.rostikandrusiv.epamlab29.spring.mvc.rest.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Collection;
@@ -21,7 +20,6 @@ public class Order {
     private User user;
 
     @OneToMany(mappedBy = "orders")
-    @JsonIgnore
     private Collection<Ticket> tickets;
 
     private double totalCost;

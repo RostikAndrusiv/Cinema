@@ -26,7 +26,6 @@ public class Seance {
     private LocalDate dateOfSeance;
 
     @ManyToOne
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Session session;
 
     private double price;
@@ -35,6 +34,5 @@ public class Seance {
     private Room room;
 
     @OneToMany(mappedBy = "seance")
-    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Ticket> tickets;
 }

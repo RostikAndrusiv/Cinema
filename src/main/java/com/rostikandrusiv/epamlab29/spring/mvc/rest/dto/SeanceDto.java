@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.dto.group.OnCreate;
+import com.rostikandrusiv.epamlab29.spring.mvc.rest.model.Ticket;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -30,6 +31,7 @@ public class SeanceDto {
     private LocalDate dateOfSeance;
 
     @NotBlank(message = "SessionId should not be empty", groups = OnCreate.class)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private SessionDto session;
 
     @NotBlank(message = "RoomId should not be empty", groups = OnCreate.class)
@@ -38,7 +40,8 @@ public class SeanceDto {
     @NotBlank(message = "Price should not be empty", groups = OnCreate.class)
     private double price;
 
-    private List<TicketDto> tickets;
+    @JsonIgnoreProperties({"seance", "orders"})
+    private List<Ticket> tickets;
 
 }
 

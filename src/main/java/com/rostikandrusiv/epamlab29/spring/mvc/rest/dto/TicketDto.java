@@ -16,13 +16,11 @@ public class TicketDto {
 
     private long id;
 
-    @JsonIgnore
+    @JsonIgnoreProperties("ticket")
     private SeatDto seat;
 
-    @JsonIgnore
-    private OrderDto orders;
+    private boolean booked;
 
-    private boolean isBooked;
-    @JsonIgnore
+    @JsonIgnoreProperties({"ticket","movie"})
     private SeanceDto seance;
 }

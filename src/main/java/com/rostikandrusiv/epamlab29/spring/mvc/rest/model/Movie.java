@@ -1,12 +1,8 @@
 package com.rostikandrusiv.epamlab29.spring.mvc.rest.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
-import java.util.Collection;
+
 @Entity
 @Data
 @Builder

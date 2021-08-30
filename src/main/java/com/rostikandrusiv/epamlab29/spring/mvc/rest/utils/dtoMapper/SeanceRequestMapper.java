@@ -5,6 +5,6 @@ import com.rostikandrusiv.epamlab29.spring.mvc.rest.model.Seance;
 
 public interface SeanceRequestMapper {
 
-    public Seance toSeance(SeanceRequestDto dto);
+    Seance toSeance(SeanceRequestDto dto);
 
 }
