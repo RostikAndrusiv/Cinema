@@ -10,10 +10,9 @@ import java.util.Collection;
 import java.util.Collections;
 @Slf4j
 public class JwtUser implements UserDetails {
-    private int id;
+    private long id;
     private String login;
     private String email;
-    private int age;
     private String password;
     private Collection<? extends GrantedAuthority> grantedAuthorities;
 

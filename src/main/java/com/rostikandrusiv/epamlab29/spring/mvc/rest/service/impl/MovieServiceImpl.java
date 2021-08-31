@@ -19,13 +19,14 @@ import java.util.stream.Collectors;
 public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
+    private final MovieMapper movieMapper;
 
     @Override
     public MovieDto getMovie(long id) {
         log.info("getMovie by id {} ", id);
         Movie movie = movieRepository.findById(id)
                 .orElseThrow(MovieNotFoundException::new);
-        return MovieMapper.INSTANCE.toMovieDto(movie);
+        return movieMapper.toMovieDto(movie);
     }
 
     @Override
@@ -33,16 +34,16 @@ public class MovieServiceImpl implements MovieService {
         log.info("getAllMovies");
         List<Movie> movies = movieRepository.findAll();
         return movies.stream()
-                .map(MovieMapper.INSTANCE::toMovieDto)
+                .map(movieMapper::toMovieDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public MovieDto createMovie(MovieDto movieDto) {
         log.info("createMovie with name {} ", movieDto.getName());
-        Movie movie = MovieMapper.INSTANCE.toMovie(movieDto);
+        Movie movie = movieMapper.toMovie(movieDto);
         movie = movieRepository.save(movie);
-        return MovieMapper.INSTANCE.toMovieDto(movie);
+        return movieMapper.toMovieDto(movie);
     }
 
     @Override
@@ -52,7 +53,7 @@ public class MovieServiceImpl implements MovieService {
                 .orElseThrow(MovieNotFoundException::new);
         Movie storedMovie = movieRepository.save(persistedMovie);
         log.info("Movie with id {} was successfully updated", storedMovie.getId());
-        return MovieMapper.INSTANCE.toMovieDto(persistedMovie);
+        return movieMapper.toMovieDto(persistedMovie);
     }
 
     @Override

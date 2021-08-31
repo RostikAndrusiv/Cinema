@@ -13,11 +13,11 @@ public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     @ManyToOne
     private Seance seance;
-    @JsonIgnoreProperties("ticket")
+
     @ManyToOne
     private Seat seat;
 

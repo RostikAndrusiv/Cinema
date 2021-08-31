@@ -17,21 +17,22 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SessionServiceImpl implements SessionService {
     private final SessionRepository sessionRepository;
+    private final SessionMapper sessionMapper;
 
     @Override
     public SessionDto getSession(long id) {
         log.info("getSession by id {} ", id);
         Session session = sessionRepository.findById(id)
                 .orElseThrow(SessionNotFoundException::new);
-        return SessionMapper.INSTANCE.toSessionDto(session);
+        return sessionMapper.toSessionDto(session);
     }
 
     @Override
     public SessionDto createSession(SessionDto sessionDto) {
      //   log.info("createSession at {} ", sessionDto.getStartTime());
-        Session session = SessionMapper.INSTANCE.toSession(sessionDto);
+        Session session = sessionMapper.toSession(sessionDto);
         session = sessionRepository.save(session);
-        return SessionMapper.INSTANCE.toSessionDto(session);
+        return sessionMapper.toSessionDto(session);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class SessionServiceImpl implements SessionService {
                 .orElseThrow(SessionNotFoundException::new);
         Session storedSession = sessionRepository.save(persistedSession);
    //     log.info("Session time was successfully changed to {}", storedSession.getStartTime());
-        return SessionMapper.INSTANCE.toSessionDto(persistedSession);
+        return sessionMapper.toSessionDto(persistedSession);
     }
 
     @Override
@@ -57,7 +58,7 @@ public class SessionServiceImpl implements SessionService {
         log.info("getAllSessions");
         List<Session> sessions = sessionRepository.findAll();
         return sessions.stream()
-                .map(SessionMapper.INSTANCE::toSessionDto)
+                .map(sessionMapper::toSessionDto)
                 .collect(Collectors.toList());
     }
 }

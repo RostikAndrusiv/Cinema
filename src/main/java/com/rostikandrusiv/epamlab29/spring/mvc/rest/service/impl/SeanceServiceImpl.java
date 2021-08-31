@@ -25,13 +25,14 @@ public class SeanceServiceImpl implements SeanceService {
     private final SeanceRepository seanceRepository;
     private final TicketRepository ticketRepository;
     private final SeanceRequestMapperImpl seanceRequestMapper;
+    private final SeanceMapper seanceMapper;
 
     @Override
     public SeanceDto getSeance(long id) {
         log.info("getSeance by id {} ", id);
         Seance seance = seanceRepository.findById(id)
                 .orElseThrow(SeanceNotFoundException::new);
-        return SeanceMapper.INSTANCE.toSeanceDto(seance);
+        return seanceMapper.toSeanceDto(seance);
     }
 
     @Override
@@ -49,7 +50,7 @@ public class SeanceServiceImpl implements SeanceService {
             ticket.setBooked(false);
             ticketRepository.save(ticket);
         });
-        return SeanceMapper.INSTANCE.toSeanceDto(seance);
+        return seanceMapper.toSeanceDto(seance);
     }
 
     @Override
@@ -59,7 +60,7 @@ public class SeanceServiceImpl implements SeanceService {
                 .orElseThrow(SeanceNotFoundException::new);
         Seance storedSeance = seanceRepository.save(persistedSeance);
         log.info("Seance id = {} was successfully changed", storedSeance.getId());
-        return SeanceMapper.INSTANCE.toSeanceDto(persistedSeance);
+        return seanceMapper.toSeanceDto(persistedSeance);
     }
 
     @Override
@@ -75,7 +76,7 @@ public class SeanceServiceImpl implements SeanceService {
         log.info("getAllSeances");
         List<Seance> seances = seanceRepository.findAll();
         return seances.stream()
-                .map(SeanceMapper.INSTANCE::toSeanceDto)
+                .map(seanceMapper::toSeanceDto)
                 .collect(Collectors.toList());
     }
 }

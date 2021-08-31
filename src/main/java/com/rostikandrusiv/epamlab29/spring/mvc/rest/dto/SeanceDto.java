@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.dto.group.OnCreate;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.model.Ticket;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
@@ -16,6 +18,8 @@ import java.util.List;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SeanceDto {
 
@@ -41,7 +45,7 @@ public class SeanceDto {
     private double price;
 
     @JsonIgnoreProperties({"seance", "orders"})
-    private List<Ticket> tickets;
+    private List<TicketDto> tickets;
 
 }
 

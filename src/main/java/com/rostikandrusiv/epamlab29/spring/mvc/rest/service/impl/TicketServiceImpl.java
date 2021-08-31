@@ -5,6 +5,7 @@ import com.rostikandrusiv.epamlab29.spring.mvc.rest.exception.TicketNotFoundExce
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.model.Ticket;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.repository.TicketRepository;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.service.TicketService;
+import com.rostikandrusiv.epamlab29.spring.mvc.rest.utils.dtoMapper.Impl.TicketMapperImpl;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.utils.dtoMapper.TicketMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class TicketServiceImpl implements TicketService {
+
+    private final TicketMapper ticketMapper;
     private final TicketRepository ticketRepository;
 
     @Override
@@ -23,15 +26,15 @@ public class TicketServiceImpl implements TicketService {
         log.info("getTicket by id {} ", id);
         Ticket ticket = ticketRepository.findById(id)
                 .orElseThrow(TicketNotFoundException::new);
-        return TicketMapper.INSTANCE.toTicketDto(ticket);
+        return ticketMapper.toTicketDto(ticket);
     }
 
     @Override
     public TicketDto createTicket(TicketDto ticketDto) {
         log.info("createTicket id {} ", ticketDto.getId());
-        Ticket ticket = TicketMapper.INSTANCE.toTicket(ticketDto);
+        Ticket ticket = ticketMapper.toTicket(ticketDto);
         ticket = ticketRepository.save(ticket);
-        return TicketMapper.INSTANCE.toTicketDto(ticket);
+        return ticketMapper.toTicketDto(ticket);
     }
 
     @Override
@@ -47,7 +50,7 @@ public class TicketServiceImpl implements TicketService {
         log.info("getAllTickets");
         List<Ticket> tickets = ticketRepository.findAll();
         return tickets.stream()
-                .map(TicketMapper.INSTANCE::toTicketDto)
+                .map(ticketMapper::toTicketDto)
                 .collect(Collectors.toList());
     }
 

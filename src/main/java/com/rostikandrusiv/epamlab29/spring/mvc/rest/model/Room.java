@@ -22,7 +22,7 @@ import java.util.Collection;
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(length = 30)
     private String name;

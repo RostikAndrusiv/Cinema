@@ -26,13 +26,14 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
     @Override
     public UserDto getUser(long id) {
         log.info("getUser by id {} ", id);
         User user = userRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
-        return UserMapper.INSTANCE.toUserDto(user);
+        return userMapper.toUserDto(user);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
         log.info("getAllMovies");
         List<User> users = userRepository.findAll();
         return users.stream()
-                .map(UserMapper.INSTANCE::toUserDto)
+                .map(userMapper::toUserDto)
                 .collect(Collectors.toList());
     }
 
@@ -53,12 +54,12 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByEmail(userDto.getEmail())) {
             throw new EmailAlreadyUsedException();
         }
-        User user = UserMapper.INSTANCE.toUser(userDto);
+        User user = userMapper.toUser(userDto);
         Role userRole = roleRepository.findByname("ROLE_USER");
         user.setRole(userRole);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user = userRepository.save(user);
-        return UserMapper.INSTANCE.toUserDto(user);
+        return userMapper.toUserDto(user);
     }
 
     @Override
@@ -66,7 +67,7 @@ public class UserServiceImpl implements UserService {
         log.info("findUser with name {} ", login);
         User user = userRepository.findByLogin(login);
         if (passwordEncoder.matches(password, user.getPassword())) {
-            return UserMapper.INSTANCE.toUserDto(user);
+            return userMapper.toUserDto(user);
         }
         return null;
     }
@@ -79,7 +80,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(UserNotFoundException::new);
         User storedUser = userRepository.save(persistedUser);
         log.info("User with {} name was successfully updated", storedUser.getLogin());
-        return UserMapper.INSTANCE.toUserDto(persistedUser);
+        return userMapper.toUserDto(persistedUser);
     }
 
     @Override

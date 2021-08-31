@@ -15,12 +15,12 @@ import java.util.Collection;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderDto {
 
-    private int id;
+    private long id;
 
     @JsonIgnoreProperties({"login", "email", "password", "repeatPassword"})
     private UserDto user;
 
-    @JsonIgnoreProperties({"seance.tickets", "orders"})
+    @JsonIgnoreProperties({"orders", "seance"})
     private Collection<TicketDto> tickets;
 
     private double totalCost;

@@ -23,7 +23,7 @@ public class Session {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     private LocalTime startTime;
 }

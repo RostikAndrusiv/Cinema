@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface SessionRepository extends JpaRepository<Session, Long> {
 
-    Optional<Session> findById(int id);
+    Optional<Session> findById(long id);
 
     Session findByStartTime(LocalTime startTime);
 }

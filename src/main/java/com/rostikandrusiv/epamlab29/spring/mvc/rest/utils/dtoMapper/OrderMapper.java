@@ -1,17 +1,17 @@
 package com.rostikandrusiv.epamlab29.spring.mvc.rest.utils.dtoMapper;
 
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.dto.OrderDto;
+import com.rostikandrusiv.epamlab29.spring.mvc.rest.dto.OrderDto;
+import com.rostikandrusiv.epamlab29.spring.mvc.rest.model.Order;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.model.Order;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {UserMapper.class, TicketMapper.class})
 public interface OrderMapper {
-    OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
-    Order toOrder(OrderDto orderDto);
+    Order toOrder(OrderDto dto);
 
-    @InheritInverseConfiguration
-    OrderDto toOrderDto(Order order);
+    OrderDto toOrderDto(Order entity);
+
 }

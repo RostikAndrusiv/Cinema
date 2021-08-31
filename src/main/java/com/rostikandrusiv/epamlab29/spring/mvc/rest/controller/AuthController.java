@@ -10,22 +10,19 @@ import com.rostikandrusiv.epamlab29.spring.mvc.rest.model.User;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.security.jwt.JwtProvider;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.service.UserService;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.utils.dtoMapper.UserMapper;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
-import javax.validation.Valid;
 
 @RestController
+@RequiredArgsConstructor
 public class AuthController implements AuthApi {
+
     private final UserService userService;
     private final UserAssembler userAssembler;
     private final JwtProvider jwtProvider;
+    private final UserMapper userMapper;
 
-    public AuthController(UserService userService, UserAssembler userAssembler, JwtProvider jwtProvider) {
-        this.userService = userService;
-        this.jwtProvider = jwtProvider;
-        this.userAssembler = userAssembler;
-    }
+
 
     public UserModel registerUser(UserDto userDto) {
         UserDto outUserDto = userService.createUser(userDto);
@@ -33,7 +30,7 @@ public class AuthController implements AuthApi {
     }
 
     public AuthResponse auth(AuthRequest request) {
-        User user = UserMapper.INSTANCE.toUser(userService.findByLoginAndPassword(request.getLogin(), request.getPassword()));
+        User user = userMapper.toUser(userService.findByLoginAndPassword(request.getLogin(), request.getPassword()));
         String token = jwtProvider.generateToken(user.getLogin());
         return new AuthResponse(token);
     }

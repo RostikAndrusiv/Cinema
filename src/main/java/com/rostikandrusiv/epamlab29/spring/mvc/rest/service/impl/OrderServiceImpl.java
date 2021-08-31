@@ -1,6 +1,7 @@
 package com.rostikandrusiv.epamlab29.spring.mvc.rest.service.impl;
 
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.dto.OrderDto;
+import com.rostikandrusiv.epamlab29.spring.mvc.rest.exception.TicketNotFoundException;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.model.Order;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.model.OrderRequest;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.model.Ticket;
@@ -10,11 +11,11 @@ import com.rostikandrusiv.epamlab29.spring.mvc.rest.repository.UserRepository;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.security.jwt.JwtUser;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.service.OrderService;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.utils.dtoMapper.OrderMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,16 +23,12 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final TicketRepository ticketRepository;
-
-    public OrderServiceImpl(OrderRepository orderRepository, UserRepository userRepository, TicketRepository ticketRepository) {
-        this.orderRepository = orderRepository;
-        this.userRepository = userRepository;
-        this.ticketRepository = ticketRepository;
-    }
+    private final OrderMapper orderMapper;
 
     @Override
     public OrderDto reserveTickets(OrderRequest orderRequest) {
@@ -44,14 +41,15 @@ public class OrderServiceImpl implements OrderService {
         String userName = jwtUser.getUsername();
 
         orderRequest.getTicketIdsList().forEach(id -> {
-            Ticket ticket = ticketRepository.findById(id);
+            Ticket ticket = ticketRepository.findById(id)
+                    .orElseThrow(TicketNotFoundException::new);
             ticket.setBooked(true);
             ticket.setOrders(order);
             order.getTickets().add(ticket);
             order.setUser(userRepository.findByLogin(userName));
         });
         orderRepository.save(order);
-        return OrderMapper.INSTANCE.toOrderDto(order);
+        return orderMapper.toOrderDto(order);
 
     }
 
@@ -60,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
         log.info("getAllOrders");
         List<Order> orders = orderRepository.findAll();
         return orders.stream()
-                .map(OrderMapper.INSTANCE::toOrderDto)
+                .map(orderMapper::toOrderDto)
                 .collect(Collectors.toList());
     }
 
@@ -72,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
         String userName = jwtUser.getUsername();
         List<Order> orders = orderRepository.findOrderByUser(userRepository.findByLogin(userName).getId());
         return orders.stream()
-                .map(OrderMapper.INSTANCE::toOrderDto)
+                .map(orderMapper::toOrderDto)
                 .collect(Collectors.toList());
     }
 
@@ -81,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
         log.info("getAllOrders from user id {}", id);
         List<Order> orders = orderRepository.findOrderByUser(id);
         return orders.stream()
-                .map(OrderMapper.INSTANCE::toOrderDto)
+                .map(orderMapper::toOrderDto)
                 .collect(Collectors.toList());
     }
 }

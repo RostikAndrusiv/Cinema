@@ -23,19 +23,20 @@ public class RoomServiceImpl implements RoomService {
 
     private final RoomRepository roomRepository;
     private final SeatRepository seatRepository;
+    private final RoomMapper roomMapper;
 
     @Override
     public RoomDto getRoom(long id) {
         log.info("getRoom by id {} ", id);
         Room room = roomRepository.findById(id)
                 .orElseThrow(RoomNotFoundException::new);
-        return RoomMapper.INSTANCE.toRoomDto(room);
+        return roomMapper.toRoomDto(room);
     }
 
     @Override
     public RoomDto createRoom(RoomDto roomDto) {
         log.info("createRoom id {}", roomDto.getId());
-        Room room = RoomMapper.INSTANCE.toRoom(roomDto);
+        Room room = roomMapper.toRoom(roomDto);
         List<Seat> seats = new ArrayList<>();
         room.setSeats(seats);
         roomRepository.save(room);
@@ -46,7 +47,7 @@ public class RoomServiceImpl implements RoomService {
             room.getSeats().add(seat);
         }
         roomRepository.save(room);
-        return RoomMapper.INSTANCE.toRoomDto(room);
+        return roomMapper.toRoomDto(room);
     }
 
     @Override
@@ -56,7 +57,7 @@ public class RoomServiceImpl implements RoomService {
                 .orElseThrow(RoomNotFoundException::new);
         Room storedRoom = roomRepository.save(persistedRoom);
         log.info("Room id = {} was successfully changed", storedRoom.getId());
-        return RoomMapper.INSTANCE.toRoomDto(persistedRoom);
+        return roomMapper.toRoomDto(persistedRoom);
     }
 
     @Override
@@ -72,7 +73,7 @@ public class RoomServiceImpl implements RoomService {
         log.info("getAllRooms");
         List<Room> rooms = roomRepository.findAll();
         return rooms.stream()
-                .map(RoomMapper.INSTANCE::toRoomDto)
+                .map(roomMapper::toRoomDto)
                 .collect(Collectors.toList());
     }
 

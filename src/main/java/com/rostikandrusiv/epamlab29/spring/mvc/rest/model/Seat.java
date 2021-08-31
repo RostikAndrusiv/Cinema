@@ -18,7 +18,7 @@ public class Seat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     private int number;
 
