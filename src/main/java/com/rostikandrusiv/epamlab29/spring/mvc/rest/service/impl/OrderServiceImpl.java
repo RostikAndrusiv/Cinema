@@ -32,6 +32,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto reserveTickets(OrderRequest orderRequest) {
+
+
         Order order = new Order();
         order.setTickets(new ArrayList<>());
 
@@ -41,13 +43,15 @@ public class OrderServiceImpl implements OrderService {
         String userName = jwtUser.getUsername();
 
         orderRequest.getTicketIdsList().forEach(id -> {
-            Ticket ticket = ticketRepository.findById(id)
+            Ticket ticket = ticketRepository.findByIdAndBooked(id, false)
                     .orElseThrow(TicketNotFoundException::new);
             ticket.setBooked(true);
             ticket.setOrders(order);
             order.getTickets().add(ticket);
             order.setUser(userRepository.findByLogin(userName));
         });
+        orderRepository.save(order);
+        order.setTotalCost(orderRepository.findTotalCost(order.getId()));
         orderRepository.save(order);
         return orderMapper.toOrderDto(order);
 

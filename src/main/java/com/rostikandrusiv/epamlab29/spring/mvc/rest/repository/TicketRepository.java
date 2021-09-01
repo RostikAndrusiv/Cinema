@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     Optional<Ticket> findById(long id);
+
+    Optional<Ticket> findByIdAndBooked(long id, boolean booked);
 }

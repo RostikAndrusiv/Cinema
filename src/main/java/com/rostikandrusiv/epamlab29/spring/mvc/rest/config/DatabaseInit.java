@@ -111,8 +111,10 @@ public class DatabaseInit {
     }
 
     private double randomPrice(){
-        double random = ThreadLocalRandom.current().nextDouble(8.5, 15.5);
-        return round(random, 2);
+        double min = 0.0;
+        double max = 10.0;
+        double x = (Math.random() * ((max - min) + 1)) + min;
+        return Math.round(x * 10.0) / 10.0;
     }
 
     private LocalDate randomDate() {

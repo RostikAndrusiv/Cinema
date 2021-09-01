@@ -3,7 +3,7 @@ package com.rostikandrusiv.epamlab29.spring.mvc.rest.exception;
 import com.rostikandrusiv.epamlab29.spring.mvc.rest.model.enums.ErrorType;
 
 public class TicketNotFoundException extends ServiceException{
-    private static final String DEFAULT_MESSAGE = "Ticket is not found!";
+    private static final String DEFAULT_MESSAGE = "Ticket doesnt exist, or already reserved!";
 
     public TicketNotFoundException() {
         super(DEFAULT_MESSAGE);
